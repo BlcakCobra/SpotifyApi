@@ -1,0 +1,24 @@
+.button {
+    display: flex;
+    font-size: 20px;
+    text-decoration: none;
+    transition:  0.3s;
+    background: none;
+    margin-top: 30px;
+    margin-left: -85px;
+  }
+
+
+
+.link:hover {
+  color: #ffffff;
+}
+
+.active {
+  color: #fff;
+}
+
+.icon {
+  margin-right: 10px;
+  color: inherit;
+}

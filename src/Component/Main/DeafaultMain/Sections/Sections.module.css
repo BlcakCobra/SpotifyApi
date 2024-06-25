@@ -1,0 +1,32 @@
+.Sections{
+    width: 100%;
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(45deg, #121212 0%, #181818 100%);
+}
+
+.secDiv{
+    width: 40%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #121212 0%, #181818 100%);
+    gap: 50px;
+}
+.Section{
+    width: 80px;
+    height: 25px;
+    border-radius: 15px;
+    display: flex;
+    background-color: #b7b7b738;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.5s;
+    &:hover{
+        background-color: #b7b7b7a1;
+    }
+}

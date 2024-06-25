@@ -1,0 +1,9 @@
+.Main{
+    width: 900px;
+    height: 100%;
+    border-radius: 8px;
+    margin: 10px 0px;
+    display: flex;
+    background: linear-gradient(45deg, #121212 0%, #181818 100%);
+    flex-direction: column;
+}

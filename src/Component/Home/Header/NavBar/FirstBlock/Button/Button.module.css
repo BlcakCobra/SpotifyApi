@@ -6,19 +6,8 @@
     background: none;
     margin-top: 30px;
     margin-left: -85px;
+    color: rgba(255, 255, 255, 0.582);
+    &:hover{
+      color: white;
+    }
   }
-
-
-
-.link:hover {
-  color: #ffffff;
-}
-
-.active {
-  color: #fff;
-}
-
-.icon {
-  margin-right: 10px;
-  color: inherit;
-}

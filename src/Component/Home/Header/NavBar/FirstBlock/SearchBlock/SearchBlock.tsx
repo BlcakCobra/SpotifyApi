@@ -4,7 +4,7 @@ import styles from "./SearchBlock.module.css"
 export default function SearchBlock() {
   return (
     <NavLink
-    to="/search"
+    to="/home/search"
     className={({ isActive }) => 
       isActive ? `${styles.button} ${styles.active}` : styles.button
     }

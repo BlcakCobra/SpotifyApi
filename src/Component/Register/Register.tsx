@@ -19,8 +19,10 @@ export default function Register() {
 
   return (
     <div className={style.Register} style={{ backgroundImage: `url(${backImage})`}}>
-      <h1>Register</h1>
-      <button onClick={handleLogin}>Login with Spotify</button>
+      <div className={style.RegisterBox}>
+      <h1 className={style.Register_h1}>Register</h1>
+      <button onClick={handleLogin} className={style.Register_button}>Login with Spotify</button>
+      </div>
     </div>
   );
 }

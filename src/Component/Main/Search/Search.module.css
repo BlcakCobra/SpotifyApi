@@ -1,0 +1,22 @@
+.SearchMain {
+    width: 100%;
+    height: 75px;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+.SearchInput{
+  width: 250px;
+  height: 40px;
+  background-color: rgb(56, 56, 56);
+  border:none;
+  border-radius: 500px;
+  margin-left: 5%;
+  padding-left:25px ;
+}
+.Resault{
+  width: 100%; 
+  height:100%;
+  overflow-y: auto; 
+  box-sizing: border-box; 
+}

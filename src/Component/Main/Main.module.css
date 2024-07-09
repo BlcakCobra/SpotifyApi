@@ -6,4 +6,6 @@
     display: flex;
     background: linear-gradient(45deg, #121212 0%, #181818 100%);
     flex-direction: column;
+    position: relative;
+    z-index: 1;
 }

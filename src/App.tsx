@@ -4,7 +4,6 @@ import { Route,Routes,Navigate } from 'react-router-dom'
 import Callback from './Component/Callback/CallBack'
 import Register from './Component/Register/Register'
 
-
 function App() {
   const token = window.localStorage.getItem("token");
 
@@ -16,7 +15,7 @@ function App() {
         <Route path="/home/*" element={token ? <Home /> : <Navigate to="/" />} />
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

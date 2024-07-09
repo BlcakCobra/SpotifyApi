@@ -6,8 +6,8 @@ import NavBar from "./NavBar/NavBar"
 export default function Header() {
   return (
     <div className={style.Header}>
-        <NavBar/>
-        <Main/>
+      <NavBar />
+      <Main />
     </div>
-  ) 
+  );
 }

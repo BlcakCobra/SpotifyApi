@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { searchForItem } from "../../api/api";
 import { AxiosResponse } from "axios";
 import { AsyncSearchIteminitialState,  SpotifyData } from "../../types/SearchForItemType";
-
+import axios from "axios";
 
 export const AsyncSearchItem = createAsyncThunk<SpotifyData, string, { rejectValue: string }>(
   "AsyncSearchItem",
@@ -40,7 +40,6 @@ const searchItem = createSlice({
     builder
       .addCase(AsyncSearchItem.pending, (state) => {
         state.loading = true;
-        state.error = "";
         state.searchList = null;
         console.log('Loading started');
       })

@@ -125,5 +125,5 @@ export type AsyncSearchIteminitialState = {
   searchList:SpotifyData | null,
   search:string,
   loading:boolean,
-  error:any
+  error:string
 }

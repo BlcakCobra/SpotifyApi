@@ -23,11 +23,7 @@ export default function BestResault() {
 
   return (
     <div className={style.BestResault}>
-         {searchList?.tracks.items.map((el) =>{
-        return (
-          <BestArtistBlock/>
-        )
-      })}
+         <BestArtistBlock/>
     </div>
   );
 }

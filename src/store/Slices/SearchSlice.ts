@@ -4,14 +4,20 @@ import { AxiosResponse } from "axios";
 import { AsyncSearchIteminitialState,  SpotifyData } from "../../types/SearchForItemType";
 
 
-
-
-export const AsyncSearchItem = createAsyncThunk(
+export const AsyncSearchItem = createAsyncThunk<SpotifyData, string, { rejectValue: string }>(
   "AsyncSearchItem",
-  async (search: string) => {
-    const res: AxiosResponse<any> = await searchForItem(search);
-    console.log(res);
-    return res.data;
+  async (search, { rejectWithValue }) => {
+    try {
+      const res = await searchForItem(search);
+      console.log('API Response:', res); 
+      return res;
+    } catch (error) {
+      console.error("Error fetching data from Spotify API", error);
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data.message || 'Something went wrong');
+      }
+      return rejectWithValue('Something went wrong');
+    }
   }
 );
 
@@ -19,6 +25,7 @@ const initialState: AsyncSearchIteminitialState = {
   searchList: null,
   search: "",
   loading: false,
+  error: "",
 };
 
 const searchItem = createSlice({
@@ -33,15 +40,19 @@ const searchItem = createSlice({
     builder
       .addCase(AsyncSearchItem.pending, (state) => {
         state.loading = true;
-        state.searchList = null; 
+        state.error = "";
+        state.searchList = null;
+        console.log('Loading started');
       })
       .addCase(AsyncSearchItem.fulfilled, (state, action: PayloadAction<SpotifyData>) => {
         state.loading = false;
         state.searchList = action.payload;
+        console.log('Data fetched successfully', action.payload);
       })
-      .addCase(AsyncSearchItem.rejected, (state) => {
+      .addCase(AsyncSearchItem.rejected, (state, action) => {
         state.loading = false;
-        state.searchList = null; 
+        state.error = action.payload as string;
+        console.log('Error fetching data', action.payload);
       });
   },
 });

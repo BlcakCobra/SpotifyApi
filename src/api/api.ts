@@ -8,14 +8,19 @@ const getAccessToken = async () => {
   const params = new URLSearchParams();
   params.append('grant_type', 'client_credentials');
 
-  const response = await axios.post(authUrl, params, {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret),
-    },
-  });
-
-  return response.data.access_token;
+  try {
+    const response = await axios.post(authUrl, params, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret),
+      },
+    });
+    console.log('Access Token:', response.data.access_token); // Добавим лог для проверки токена
+    return response.data.access_token;
+  } catch (error) {
+    console.error('Error fetching access token from Spotify API', error);
+    throw new Error('Failed to fetch access token');
+  }
 };
 
 export const searchForItem = async (search: string) => {
@@ -29,9 +34,11 @@ export const searchForItem = async (search: string) => {
       },
     });
 
+    console.log('API Response Data:', response.data); 
+
     return response.data;
   } catch (error) {
     console.error("Error fetching data from Spotify API", error);
-    throw error;
+    throw new Error('Failed to fetch data from Spotify API');
   }
 };

@@ -1,16 +1,21 @@
 import React from 'react'
 import style from "./BestResault.module.css"
 import { useAppSelector } from '../../../../hooks'
+import BestArtistBlock from './BestArtistBlock/BestArtistBlock';
 
 
 export default function BestResault() {
-  const { searchList, loading } = useAppSelector(state => state.searchItem);
+  const { searchList, loading, error } = useAppSelector(state => state.searchItem);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (searchList == undefined) {
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!searchList || Object.keys(searchList).length === 0) {
     return <div>No results found.</div>;
   }
 
@@ -18,14 +23,11 @@ export default function BestResault() {
 
   return (
     <div className={style.BestResault}>
-        <div className={style.FirstBlock}>
-            <h1 className={style.Best_title}>Лучший результат</h1>
-            <div className={style.Singer_box}>
-                <div className={style.Items}>
-                  <div className={style.circle_Image}></div>
-                </div>
-            </div>
-        </div>
+         {searchList?.tracks.items.map((el) =>{
+        return (
+          <BestArtistBlock/>
+        )
+      })}
     </div>
   );
 }

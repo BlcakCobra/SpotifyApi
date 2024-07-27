@@ -124,5 +124,6 @@ export interface SpotifyData {
 export type AsyncSearchIteminitialState = {
   searchList:SpotifyData | null,
   search:string,
-  loading:boolean
+  loading:boolean,
+  error:any
 }

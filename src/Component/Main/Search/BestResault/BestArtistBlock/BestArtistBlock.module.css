@@ -1,0 +1,33 @@
+.FirstBlock{
+    width: 50%;
+    height: 100%;
+}
+.Best_title{
+    margin-left: 5%;
+    margin-top: 2%;
+    font-size: 28px;
+}
+.Singer_box{
+    width: 370px;
+    height: 225px;
+    background-color: rgba(255, 255, 255, 0.026);
+    border-radius: 8px;
+    margin-top: 4%;
+    margin-left: 4%;
+    position: relative;
+}
+.Items{
+    width: 75%;
+    height: 85%;
+    position:absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.circle_Image{
+    width: 92px;
+    height: 92px;
+    background-color: aqua;
+    border-radius: 50%;
+}

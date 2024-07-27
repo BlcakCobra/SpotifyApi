@@ -39,7 +39,7 @@ export default function Search() {
       ) 
        : (
         <div className={style.Resault}>
-          <BestResault />
+          <BestResault/>
         </div>
       )}
     </>

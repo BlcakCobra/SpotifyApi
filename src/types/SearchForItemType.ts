@@ -8,7 +8,7 @@ interface SpotifyObject {
   items: Array<Item>;
 }
 
-interface Item {
+export interface Item {
   album?: Album;
   artists?: Array<Artist>;
   available_markets?: Array<string>;
@@ -64,7 +64,7 @@ interface Album {
   artists: Array<Artist>;
 }
 
-interface Artist {
+export interface Artist {
   external_urls: ExternalUrls;
   followers?: Followers;
   genres?: Array<string>;

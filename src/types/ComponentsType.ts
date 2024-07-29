@@ -1,9 +1,10 @@
-import { SpotifyData } from "./SearchForItemType"
+import { Item, SpotifyData } from "./SearchForItemType"
 
 export type SectionsType = {
     sectionName:string[]
     chooseSection:(name:string) => void
 }
-export type BestArtistBlock = {
-    Item:SpotifyData
-}
+
+export type BestArtistBlockType = {
+    filteredResults: Item[];
+  };

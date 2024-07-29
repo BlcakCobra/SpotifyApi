@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { searchForItem } from "../../api/api";
-import { AxiosResponse } from "axios";
 import { AsyncSearchIteminitialState,  SpotifyData } from "../../types/SearchForItemType";
 import axios from "axios";
 

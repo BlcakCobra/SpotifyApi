@@ -15,6 +15,11 @@
     margin-top: 4%;
     margin-left: 4%;
     position: relative;
+    transition: 0.5s;
+    cursor: pointer;
+    &:hover{
+        background-color: rgba(255, 255, 255, 0.142);
+    }
 }
 .Items{
     width: 75%;
@@ -24,10 +29,20 @@
     left: 15px;
     display: flex;
     flex-wrap: wrap;
+    gap:  20px;
+
 }
 .circle_Image{
     width: 92px;
     height: 92px;
-    background-color: aqua;
     border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.BestResultText{
+    font-size: 28px;
+}
+.BestResultName{
+    font-size: 28px;
 }

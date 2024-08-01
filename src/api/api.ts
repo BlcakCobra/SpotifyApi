@@ -15,7 +15,7 @@ const getAccessToken = async () => {
         'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret),
       },
     });
-    console.log('Access Token:', response.data.access_token); // Добавим лог для проверки токена
+    console.log('Access Token:', response.data.access_token); 
     return response.data.access_token;
   } catch (error) {
     console.error('Error fetching access token from Spotify API', error);
@@ -26,7 +26,7 @@ const getAccessToken = async () => {
 export const searchForItem = async (search: string) => {
   try {
     const accessToken = await getAccessToken();
-    const searchUrl = `https://api.spotify.com/v1/search?q=${encodeURIComponent(search)}&type=track`;
+    const searchUrl = `https://api.spotify.com/v1/search?q=${encodeURIComponent(search)}&type=track,artist,album`;
 
     const response = await axios.get(searchUrl, {
       headers: {

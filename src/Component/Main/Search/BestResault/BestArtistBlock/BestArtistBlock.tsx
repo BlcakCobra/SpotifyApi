@@ -9,6 +9,7 @@ export const BestArtistBlock: React.FC<BestArtistBlockType> = ({ filteredResults
 
   const bestResult = filteredResults[0]; 
   const artist = bestResult.artists ? bestResult.artists[0] : null;
+  const allArtists = bestResult.artists ? bestResult.artists : null
   const artistImage = artist && artist.images && artist.images.length > 0 ? artist.images[0].url : '';
   const trackImage = bestResult.album && bestResult.album.images && bestResult.album.images.length > 0 ? bestResult.album.images[0].url : '';
 
@@ -22,7 +23,10 @@ export const BestArtistBlock: React.FC<BestArtistBlockType> = ({ filteredResults
             style={{ backgroundImage: artistImage ? `url(${artistImage})` : (trackImage ? `url(${trackImage})` : 'none') }} 
           />
           <div className={style.trackInfo}>
-            <p className={style.BestResultName}>{artist ? artist.name : 'Unknown Artist'}</p>
+            <p className={style.TrackName}>{bestResult.name}</p>
+            <p>{artist ? allArtists?.map((el) =>{
+              return <div className={style.BestResultName}>{el.name}</div>
+            }): 'Unknown Artist'}</p>
           </div>
         </div>
       </div>

@@ -1,25 +1,26 @@
-import style from "./BestResault.module.css"
-import { useAppSelector } from '../../../../hooks'
+import style from "./BestResault.module.css";
+import { useAppSelector } from '../../../../hooks';
 import { BestArtistBlock } from "./BestArtistBlock/BestArtistBlock";
 import { Item, SpotifyData } from "../../../../types/SearchForItemType";
 import { useEffect, useState } from "react";
 
-
-interface ItemWithMatchScore extends Item {
+export interface ItemWithMatchScore extends Item {
   matchScore: number;
+  type: string; 
 }
 
 export default function BestResault() {
   const { searchList, loading, error, search } = useAppSelector(state => state.searchItem);
-  const [filteredResults, setFilteredResults] = useState<ItemWithMatchScore[]>([]);
+  const [bestResult, setBestResult] = useState<ItemWithMatchScore | null>(null);
 
   useEffect(() => {
     if (searchList && search) {
-      const filtered = filterResults(searchList, search);
-      setFilteredResults(filtered);
+      const best = filterResults(searchList, search);
+      setBestResult(best);
     }
   }, [searchList, search]);
-
+  
+  
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -28,61 +29,70 @@ export default function BestResault() {
     return <div>Error: {error}</div>;
   }
 
-  if (!filteredResults || filteredResults.length === 0) {
-  }
-  if(search.length === 0 ){
-    loading == false
+  if (!bestResult) {
     return <div>No results found.</div>;
   }
-  function filterResults(searchList: SpotifyData, search: string): ItemWithMatchScore[] {
+
+  function filterResults(searchList: SpotifyData, search: string): ItemWithMatchScore | null {
     const lowerCaseSearch = search.toLowerCase();
     const searchWords = lowerCaseSearch.split(' ');
 
-    const tracks = searchList.tracks.items;
-    const filteredTracks: ItemWithMatchScore[] = [];
+    const filteredResults: ItemWithMatchScore[] = [];
 
-    for (let track of tracks) {
-      const trackNameLower = track.name.toLowerCase();
-      const artistNamesLower = track.artists?.map(artist => artist.name.toLowerCase()) ?? [];
-      const genresLower = track.genres?.map(genre => genre.toLowerCase()) ?? [];
-      const albumNameLower = track.album?.name.toLowerCase() ?? '';
+    const processItems = (items: Item[], type: string) => {
+      for (let item of items) {
+        const itemNameLower = item.name.toLowerCase();
+        const artistNamesLower = item.artists?.map(artist => artist.name.toLowerCase()) ?? [];
+        const genresLower = item.genres?.map(genre => genre.toLowerCase()) ?? [];
+        const albumNameLower = item.album?.name.toLowerCase() ?? '';
 
-      let matchScore = 0;
+        let matchScore = 0;
 
-      if (artistNamesLower.includes(lowerCaseSearch) || trackNameLower === lowerCaseSearch) {
-        matchScore += 3;
+        if (artistNamesLower.includes(lowerCaseSearch) || itemNameLower === lowerCaseSearch) {
+          matchScore += 3;
+        }
+
+        if (artistNamesLower.some(name => searchWords.some(word => name.includes(word))) || searchWords.some(word => itemNameLower.includes(word))) {
+          matchScore += 2;
+        }
+
+        if (artistNamesLower.some(name => name.includes(lowerCaseSearch)) || itemNameLower.includes(lowerCaseSearch)) {
+          matchScore += 1;
+        }
+
+        if (genresLower.some(genre => genre.includes(lowerCaseSearch)) || albumNameLower.includes(lowerCaseSearch)) {
+          matchScore += 1;
+        }
+
+        if (matchScore > 0) {
+          filteredResults.push({ ...item, matchScore, type });
+        }
       }
+    };
 
-      if (artistNamesLower.some(name => searchWords.some(word => name.includes(word))) || searchWords.some(word => trackNameLower.includes(word))) {
-        matchScore += 2;
-      }
-
-      if (artistNamesLower.some(name => name.includes(lowerCaseSearch)) || trackNameLower.includes(lowerCaseSearch)) {
-        matchScore += 1;
-      }
-
-      if (genresLower.some(genre => genre.includes(lowerCaseSearch)) || albumNameLower.includes(lowerCaseSearch)) {
-        matchScore += 1;
-      }
-
-      if (matchScore > 0) {
-        filteredTracks.push({ ...track, matchScore });
-      }
+    if (searchList.tracks?.items) {
+      processItems(searchList.tracks.items, 'track');
+    }
+    if (searchList.artists?.items) {
+      processItems(searchList.artists.items, 'artist');
+    }
+    if (searchList.albums?.items) {
+      processItems(searchList.albums.items, 'album');
     }
 
-    filteredTracks.sort((a, b) => {
+    filteredResults.sort((a, b) => {
       if (b.matchScore === a.matchScore) {
         return (b.popularity ?? 0) - (a.popularity ?? 0);
       }
       return b.matchScore - a.matchScore;
     });
 
-    return filteredTracks;
+    return filteredResults.length > 0 ? filteredResults[0] : null;
   }
 
   return (
     <div className={style.BestResault}>
-      <BestArtistBlock filteredResults={filteredResults}/>
+      <BestArtistBlock bestResult={bestResult}/>
     </div>
   );
 }

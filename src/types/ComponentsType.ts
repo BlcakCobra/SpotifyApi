@@ -1,10 +1,11 @@
-import { Item, SpotifyData } from "./SearchForItemType"
+import { ItemWithMatchScore } from "../Component/Main/Search/BestResault/BestResault";
 
 export type SectionsType = {
     sectionName:string[]
     chooseSection:(name:string) => void
 }
 
-export type BestArtistBlockType = {
-    filteredResults: Item[];
-  };
+export  interface BestArtistBlockProps {
+    bestResult: ItemWithMatchScore | null;
+  }
+  

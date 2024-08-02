@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import searchItem from "./Slices/SearchSlice"
+import PlayerSlice from "./Slices/PlayerSlice";
+
+
 export const store = configureStore({
     reducer:{
-        searchItem:searchItem
+        searchItem:searchItem,
+        PlayerSlice:PlayerSlice
     }       
 })
 

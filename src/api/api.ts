@@ -15,10 +15,8 @@ const getAccessToken = async () => {
         'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret),
       },
     });
-    console.log('Access Token:', response.data.access_token); 
     return response.data.access_token;
   } catch (error) {
-    console.error('Error fetching access token from Spotify API', error);
     throw new Error('Failed to fetch access token');
   }
 };
@@ -34,11 +32,28 @@ export const searchForItem = async (search: string) => {
       },
     });
 
-    console.log('API Response Data:', response.data); 
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching data from Spotify API", error);
     throw new Error('Failed to fetch data from Spotify API');
+  }
+};
+
+export const playTrack = async (trackUri:string, userAccessToken:string) => {
+  try {
+    const playerUrl = 'https://api.spotify.com/v1/me/player/play';
+
+    const response = await axios.put(playerUrl, {
+      uris: [trackUri]
+    }, {
+      headers: {
+        Authorization: `Bearer ${userAccessToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to play track on Spotify API');
   }
 };

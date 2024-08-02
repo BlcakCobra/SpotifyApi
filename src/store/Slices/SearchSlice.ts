@@ -40,17 +40,14 @@ const searchItem = createSlice({
       .addCase(AsyncSearchItem.pending, (state) => {
         state.loading = true;
         state.searchList = null;
-        console.log('Loading started');
       })
       .addCase(AsyncSearchItem.fulfilled, (state, action: PayloadAction<SpotifyData>) => {
         state.loading = false;
         state.searchList = action.payload;
-        console.log('Data fetched successfully', action.payload);
       })
       .addCase(AsyncSearchItem.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        console.log('Error fetching data', action.payload);
       });
   },
 });

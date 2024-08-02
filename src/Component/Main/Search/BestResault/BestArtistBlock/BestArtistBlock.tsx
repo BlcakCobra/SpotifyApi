@@ -1,17 +1,17 @@
-import React from "react"
-import style from "./BestArtistBlock.module.css"
-import { BestArtistBlockType } from "../../../../../types/ComponentsType"
+import React from "react";
+import style from "./BestArtistBlock.module.css";
+import { BestArtistBlockProps } from "../../../../../types/ComponentsType";
 
-export const BestArtistBlock: React.FC<BestArtistBlockType> = ({ filteredResults }) => {
-  if (filteredResults.length === 0) {
+
+export const BestArtistBlock: React.FC<BestArtistBlockProps> = ({ bestResult }) => {
+  if (!bestResult) {
     return <div>No results found.</div>;
   }
 
-  const bestResult = filteredResults[0]; 
   const artist = bestResult.artists ? bestResult.artists[0] : null;
-  const allArtists = bestResult.artists ? bestResult.artists : null
-  const artistImage = artist && artist.images && artist.images.length > 0 ? artist.images[0].url : '';
-  const trackImage = bestResult.album && bestResult.album.images && bestResult.album.images.length > 0 ? bestResult.album.images[0].url : '';
+  const artistImage = artist && artist.images ? artist.images[0].url : null;
+  const albumImage = bestResult.album && bestResult.album.images ? bestResult.album.images[0].url : null;
+  const imageUrl = artistImage || albumImage || '';
 
   return (
     <div className={style.FirstBlock}>
@@ -20,13 +20,12 @@ export const BestArtistBlock: React.FC<BestArtistBlockType> = ({ filteredResults
         <div className={style.Items}>
           <div 
             className={style.circle_Image} 
-            style={{ backgroundImage: artistImage ? `url(${artistImage})` : (trackImage ? `url(${trackImage})` : 'none') }} 
+            style={{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }} 
           />
           <div className={style.trackInfo}>
-            <p className={style.TrackName}>{bestResult.name}</p>
-            <p>{artist ? allArtists?.map((el) =>{
-              return <div className={style.BestResultName}>{el.name}</div>
-            }): 'Unknown Artist'}</p>
+            <p>{bestResult.name}</p>
+            <p>{artist ? artist.name : ''}</p>
+            <p>{bestResult.type}</p>
           </div>
         </div>
       </div>
